@@ -6,7 +6,8 @@
     ],
     "enabledManagers": [
         "npm",
-        "github-actions"
+        "github-actions",
+        "docker"
     ],
     "dependencyDashboard": true,
     "rangeStrategy": "bump",

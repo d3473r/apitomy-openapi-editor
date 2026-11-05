@@ -1,0 +1,41 @@
+# Caddy server configuration for the Apitomy OpenAPI Editor container.
+#
+# The __BASE_PATH__ placeholder is replaced with the BASE_PATH build argument
+# when the image is built (see Dockerfile).
+
+{
+	# No admin API: not needed to serve static content, and it avoids
+	# opening an extra port.
+	admin off
+}
+
+:8080 {
+	root * /srv
+
+	# Compress responses (zstd preferred, gzip fallback).
+	encode zstd gzip
+
+	header {
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+
+	# Redirect the bare server root to the app's base path.
+	# __ROOT_REDIRECT__
+
+	# Fingerprinted Vite assets (content-hashed file names) never change:
+	# cache them forever.
+	handle __BASE_PATH__assets/* {
+		header Cache-Control "public, max-age=31536000, immutable"
+		file_server
+	}
+
+	# Everything else - most importantly the HTML entry point - falls back
+	# to the application entry point (single-page app) and must always be
+	# revalidated so that new image versions are picked up immediately.
+	handle {
+		header Cache-Control "no-cache"
+		try_files {path} __BASE_PATH__index.html
+		file_server
+	}
+}

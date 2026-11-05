@@ -53,6 +53,19 @@ npm run test-app:dev
 The test application will start on `http://localhost:3000` (or the next available port). This
 provides a full-featured demo of the OpenAPI Editor with sample data and all features enabled.
 
+## Docker
+
+A multi-stage `Dockerfile` builds the editor web application and serves it with Caddy:
+
+```bash
+docker build -t apitomy-openapi-editor .
+docker run --rm -p 8080:8080 apitomy-openapi-editor
+```
+
+The editor is then available at `http://localhost:8080`. See [Deployment](docs/deployment.md)
+for configuration options (`BASE_PATH`), cross-platform builds and an example that runs the
+image behind a Traefik reverse proxy.
+
 ## Usage
 
 ```tsx

@@ -1,0 +1,26 @@
+# Version control and CI
+.git
+.gitignore
+.github
+
+# Documentation and website
+docs
+mkdocs.yml
+site
+
+# Dependencies and build artifacts - rebuilt inside the image
+**/node_modules
+**/dist
+*.tsbuildinfo
+
+# Test suites and development tooling not needed to build the app
+e2e
+playwright.config.ts
+test-app/e2e
+test-app/test-results
+
+# Local files
+**/*.md
+.claude
+.DS_Store
+*.log
